@@ -1,24 +1,26 @@
+use std::collections::VecDeque;
+
 // Exercise 1
 #[allow(dead_code)]
 fn exercise1(color: &str) -> String {
-    todo!()
+    color.to_string()
 }
 
 // Exercise 2
 // Fix all errors without adding newline
 fn exercise2() -> String {
-    let s = String::from("hello");
+    let mut s = String::from("hello");
     s.push(',');
-    s.push(" world");
-    s += "!".to_string();
+    s.push_str(" world");
+    s += &"!".to_string();
     s
 }
 // Exercise 3
 // Fix errors without removing any line
 fn exercise3() -> String {
     let s1 = String::from("hello,");
-    let s2 = String::from("world!");
-    let s3 = s1 + s2;
+    let s2 = String::from(" world!");
+    let s3 = s1 + &s2;
     s3
 }
 
@@ -26,20 +28,35 @@ fn exercise3() -> String {
 // Reverse a string
 
 fn reverse_string(input: &str) -> String {
-    todo!()
+    let mut stack = Vec::new();
+    for c in input.chars() {
+        stack.push(c);
+    }
+    let mut reverse_str = String::from("");
+    while !stack.is_empty() {
+        reverse_str.push(stack.pop().unwrap());
+    }
+    reverse_str
 }
-
 
 // Exercise 5
 // Check if a string is a palindrome
 fn is_palindrome(word: &str) -> bool {
-    todo!()
+    let lowercase_word = word.to_lowercase();
+    let palindrome_str = reverse_string(lowercase_word.as_str());
+    lowercase_word == palindrome_str
 }
 
 // Exercise 6
 // Count the occurrences of a character in a string
 fn count_char_occurrences(string: &str, ch: char) -> usize {
-    todo!()
+    let mut count = 0;
+    for c in string.chars() {
+        if c == ch {
+            count += 1;
+        }
+    }
+    count
 }
 
 #[cfg(test)]
@@ -63,7 +80,7 @@ mod tests {
     fn exercise3_work() {
         assert_eq!("hello, world!".to_string(), exercise3());
     }
-    
+
     // Test for exercise 4
     #[test]
     fn test_reverse_string() {
@@ -92,8 +109,7 @@ mod tests {
     #[test]
     fn test_count_char_occurrences() {
         assert_eq!(count_char_occurrences("Hello", 'l'), 2);
-        assert_eq!(count_char_occurrences("Rust is fun", 'u'), 1);
+        assert_eq!(count_char_occurrences("Rust is fun", 'u'), 2);
         assert_eq!(count_char_occurrences("Mississippi", 's'), 4);
     }
-
 }
