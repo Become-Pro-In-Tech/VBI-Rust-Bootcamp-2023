@@ -3,8 +3,8 @@
 fn exercise1() {
     // Use as many approaches as you can to make it work
     let x = String::from("hello, world");
-    let y = x;
-    let z = x;
+    let y = x.clone();
+    let z = &x;
 }
 
 // Exercise 2
@@ -17,8 +17,9 @@ fn exercise2() {
     println!("{}", s2);
 }
 // Only modify the code below!
-fn take_ownership(s: String) {
-    println!("{}", s);
+fn take_ownership(s: String) -> String {
+    // println!("{}", s);
+    s
 }
 
 // Exercise 3
@@ -41,8 +42,8 @@ fn exercise3() {
         let mut addition: f64 = 0.0;
 
         // Sumar valores en additions
-        for element_index in additions {
-            let addition_aux = values[element_index];
+        for element_index in &additions {
+            let addition_aux = values[*element_index];
             addition = addition_aux + addition;
         }
     }
@@ -68,7 +69,7 @@ fn exercise5() {
         Some(child) => child,
         None => {
             let value = "3.0".to_string();
-            my_map.insert(key, value);
+            my_map.insert(key, value.clone());
             &value // HERE IT FAILS
         }
     };
@@ -110,7 +111,7 @@ fn exercise7() {
 // Make it compile
 fn exercise8() {
     let mut accounting = vec!["Alice", "Ben"];
-    
+
     loop {
         let mut add_input = String::from("");
 
