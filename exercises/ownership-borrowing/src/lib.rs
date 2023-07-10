@@ -51,10 +51,10 @@ fn exercise3() {
 
 // Exercise 4
 // Make it compile
-fn exercise4(value: u32) -> &'static str {
+fn exercise4(value: u32) -> String {
     let str_value = value.to_string(); // Convert u32 to String
     let str_ref: &str = &str_value; // Obtain a reference to the String
-    str_ref // Return the reference to the String
+    str_ref.to_string() // Return the reference to the String
 }
 
 // Exercise 5
@@ -65,10 +65,10 @@ fn exercise5() {
 
     let key = 3;
 
+    let value = "3.0".to_string();
     let res = match my_map.get(&key) {
         Some(child) => child,
         None => {
-            let value = "3.0".to_string();
             my_map.insert(key, value.clone());
             &value // HERE IT FAILS
         }
@@ -83,14 +83,14 @@ fn exercise5() {
 use std::io;
 
 fn exercise6() {
-    let mut prev_key: &str = "";
+    let mut prev_key: String = String::new();
 
     for line in io::stdin().lines() {
         let s = line.unwrap();
 
         let data: Vec<&str> = s.split("\t").collect();
         if prev_key.len() == 0 {
-            prev_key = data[0];
+            prev_key = data[0].to_string();
         }
     }
 }
@@ -99,8 +99,8 @@ fn exercise6() {
 // Make it compile
 fn exercise7() {
     let mut v: Vec<&str> = Vec::new();
+    let chars = [b'x', b'y', b'z'];
     {
-        let chars = [b'x', b'y', b'z'];
         let s: &str = std::str::from_utf8(&chars).unwrap();
         v.push(&s);
     }
@@ -110,7 +110,7 @@ fn exercise7() {
 // Exercise 8
 // Make it compile
 fn exercise8() {
-    let mut accounting = vec!["Alice", "Ben"];
+    let mut accounting: Vec<String> = vec![String::from("Alice"), String::from("Ben")];
 
     loop {
         let mut add_input = String::from("");
@@ -127,6 +127,6 @@ fn exercise8() {
         }
 
         let person = add_vec[0];
-        accounting.push(person);
+        accounting.push(person.to_string());
     }
 }
