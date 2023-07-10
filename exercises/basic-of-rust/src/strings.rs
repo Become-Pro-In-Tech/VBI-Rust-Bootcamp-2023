@@ -50,13 +50,7 @@ fn is_palindrome(word: &str) -> bool {
 // Exercise 6
 // Count the occurrences of a character in a string
 fn count_char_occurrences(string: &str, ch: char) -> usize {
-    let mut count = 0;
-    for c in string.chars() {
-        if c == ch {
-            count += 1;
-        }
-    }
-    count
+    string.chars().into_iter().filter(|c| *c == ch).count()
 }
 
 #[cfg(test)]
