@@ -13,10 +13,20 @@ trait Hello {
 //TODO 
 struct Student {}
 impl Hello for Student {
+    fn say_something(&self) -> String {
+        String::from("I'm a good student")
+    }
 }
 //TODO
 struct Teacher {}
 impl Hello for Teacher {
+    fn say_hi(&self) -> String {
+        String::from("Hi, I'm your new teacher")
+    }
+
+    fn say_something(&self) -> String {
+        String::from("I'm not a bad teacher")
+    }
 }
 
 
@@ -24,6 +34,7 @@ impl Hello for Teacher {
 // Make it compile in unit test for exercise 2
 // Hint: use #[derive]  for struct Point 
 // Run tests
+#[derive(Debug, PartialEq)]
 struct Point {
     x: i32,
     y: i32,
@@ -35,7 +46,7 @@ struct Point {
 // Implement `fn sum` with trait bound in two ways.
 // Run tests
 // Hint: Trait Bound
-fn sum<T>(x: T, y: T) -> T {
+fn sum<T: std::ops::Add<Output = T>>(x: T, y: T) -> T {
     x + y
 }
 
@@ -106,12 +117,23 @@ trait Container {
     fn is_empty(&self) -> bool;
 }
 
-struct Stack {
-    items: Vec<u8>,
+struct Stack<T> {
+    items: Vec<T>,
 }
 
 //TODO implement Container for Stack
-
+impl<T> Container for Stack<T> {
+    type Item = T;
+    fn insert(&mut self, item: Self::Item) {
+        self.items.push(item)
+    }
+    fn remove(&mut self) -> Option<Self::Item> {
+        self.items.pop()
+    }
+    fn is_empty(&self) -> bool {
+        self.items.is_empty()
+    }
+}
 
 
 #[cfg(test)]
